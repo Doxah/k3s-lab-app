@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Livre d'or k3s</title>
+<style>body{font-family:sans-serif;max-width:40rem;margin:2rem auto}li{margin:.5rem 0}</style></head>
+<body>
+<h1>Livre d'or</h1>
+<p id="version">…</p>
+<form id="form">
+  <input id="author" placeholder="Nom" required maxlength="50">
+  <input id="msg" placeholder="Message" required maxlength="500">
+  <button>Envoyer</button>
+</form>
+<ul id="list"></ul>
+<script>
+const $ = id => document.getElementById(id);
+async function load() {
+  const v = await (await fetch('/api/version')).json();
+  $('version').textContent = `API ${v.version} servie par ${v.pod}`;
+  const msgs = await (await fetch('/api/messages')).json();
+  $('list').replaceChildren(...msgs.map(m => {
+    const li = document.createElement('li');
+    li.textContent = `${m.author} : ${m.body}`;
+    return li;
+  }));
+}
+$('form').addEventListener('submit', async e => {
+  e.preventDefault();
+  await fetch('/api/messages', {method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({author: $('author').value, body: $('msg').value})});
+  e.target.reset();
+  load();
+});
+load();
+</script>
+</body>
+</html>

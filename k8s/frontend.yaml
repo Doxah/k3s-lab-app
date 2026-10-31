@@ -1,0 +1,48 @@
+frontendVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/Doxah/guestbook-frontend    # le tag est géré par kustomization.yaml
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DB_HOST
+              value: postgres                       # résolu par CoreDNS
+            - name: DB_NAME
+              valueFrom: {secretKeyRef: {name: postgres-credentials, key: POSTGRES_DB}}
+            - name: DB_USER
+              valueFrom: {secretKeyRef: {name: postgres-credentials, key: POSTGRES_USER}}
+            - name: DB_PASSWORD
+              valueFrom: {secretKeyRef: {name: postgres-credentials, key: POSTGRES_PASSWORD}}
+          livenessProbe:                            # échec répété = redémarrage du conteneur
+            httpGet: {path: /frontend/healthz, port: 8000}
+            periodSeconds: 10
+          readinessProbe:                           # échec = retiré du Service, pas redémarré
+            httpGet: {path: /frontend/readyz, port: 8000}
+            periodSeconds: 5
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {cpu: 500m, memory: 256Mi}
+---
+frontendVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+    - port: 80
+      targetPort: 8000
