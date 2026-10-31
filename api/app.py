@@ -19,7 +19,7 @@ def readyz():
         with db() as conn:
             conn.execute("SELECT 1")
         return {"status": "ready"}
-    except Exception as exc:
+    except psycopg.Error as exc:     # erreurs de base uniquement, pas les bugs du code
         return {"status": "db unreachable", "error": str(exc)}, 503
 
 @app.get("/api/version")
