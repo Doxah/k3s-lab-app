@@ -1,4 +1,4 @@
-frontendVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
@@ -18,16 +18,16 @@ spec:
           ports:
             - containerPort: 8080
           livenessProbe:                            # échec répété = redémarrage du conteneur
-            httpGet: {path: /frontend/healthz, port: 8080}
+            httpGet: {path: /, port: 8080}
             periodSeconds: 10
           readinessProbe:                           # échec = retiré du Service, pas redémarré
-            httpGet: {path: /frontend/readyz, port: 8080}
+            httpGet: {path: /, port: 8080}
             periodSeconds: 5
           resources:
             requests: {cpu: 50m, memory: 64Mi}
             limits: {cpu: 500m, memory: 256Mi}
 ---
-frontendVersion: v1
+apiVersion: v1
 kind: Service
 metadata:
   name: frontend
