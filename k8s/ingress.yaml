@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: guestbook.192.168.1.50.sslip.io
+    - host: guestbook.k3s.lab
       http:
         paths:
           - path: /api
