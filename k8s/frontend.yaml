@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/Doxah/guestbook-frontend    # le tag est géré par kustomization.yaml
+          image: ghcr.io/doxah/guestbook-frontend    # le tag est géré par kustomization.yaml
           ports:
             - containerPort: 8000
           env:

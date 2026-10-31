@@ -1,5 +1,5 @@
 FROM python:3.13-slim
-LABEL org.opencontainers.image.source=https://github.com/Doxah/k3s-lab-app
+LABEL org.opencontainers.image.source=https://github.com/doxah/k3s-lab-app
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt

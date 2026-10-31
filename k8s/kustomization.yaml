@@ -8,7 +8,7 @@ resources:
   - frontend.yaml
   - ingress.yaml
 images:
-  - name: ghcr.io/Doxah/guestbook-api
+  - name: ghcr.io/doxah/guestbook-api
     newTag: "v1"
-  - name: ghcr.io/Doxah/guestbook-frontend
+  - name: ghcr.io/doxah/guestbook-frontend
     newTag: "v1"
