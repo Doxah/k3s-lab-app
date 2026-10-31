@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/doxah/k3s-lab-app
+    targetRevision: main
+    path: k8s                      # Argo CD détecte kustomization.yaml et lance Kustomize
+  destination:
+    server: https://kubernetes.default.svc   # le cluster où tourne Argo CD lui-même
+    namespace: guestbook
+  syncPolicy:
+    automated:
+      prune: true                  # supprime du cluster ce qui a disparu de Git
+      selfHeal: true               # annule toute modification manuelle
