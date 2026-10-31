@@ -9,6 +9,6 @@ resources:
   - ingress.yaml
 images:
   - name: ghcr.io/doxah/guestbook-api
-    newTag: "v1"
+    newTag: "sha-72409b7"
   - name: ghcr.io/doxah/guestbook-frontend
-    newTag: "v1"
+    newTag: "sha-72409b7"
