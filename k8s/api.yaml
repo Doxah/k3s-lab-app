@@ -12,7 +12,7 @@ spec:
       labels:
         app: api
     spec:
-      automoundServiceAccountToken: false
+      automountServiceAccountToken: false
       securityContext:
         runAsNonRoot: true
         seccompProfile:
@@ -41,7 +41,7 @@ spec:
             requests: {cpu: 50m, memory: 64Mi}
             limits: {cpu: 500m, memory: 256Mi}
           securityContext:
-            allowPrivilgeEscalation: false
+            allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
               drop: ["ALL"]

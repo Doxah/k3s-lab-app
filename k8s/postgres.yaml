@@ -37,7 +37,7 @@ spec:
       labels:
         app: postgres
     spec:
-      automoundServiceAccountToken: false
+      automountServiceAccountToken: false
       securityContext:
         runAsNonRoot: true
         runAsUser: 70
@@ -64,7 +64,7 @@ spec:
             requests: {cpu: 100m, memory: 256Mi}
             limits: {cpu: "1", memory: 512Mi}
           securityContext:
-            allowPrivilgeEscalation: false
+            allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
               drop: ["ALL"]
@@ -74,7 +74,7 @@ spec:
             - name: initdb                     # scripts SQL joués au premier démarrage seulement
               mountPath: /docker-entrypoint-initdb.d
             - name: run
-              mountPath: /var/run/postgressql
+              mountPath: /var/run/postgresql
             - name: tmp
               mountPath: /tmp
       volumes:
